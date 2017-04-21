@@ -10,6 +10,6 @@
   },
   "author": "Diego Santos, Jean Bauer, Palmer Oliveira",
   "bin": {
-    "cheapestHotel": "./bin/index.js"
+    "redeMLP": "./bin/index.js"
   }
 }
