@@ -38,7 +38,7 @@ fs.readFile(arquivo, 'utf8', (err, data) => {
     quality: 0
   };
 
-  const totais = vinhos 
+  const totais = vinhos   
    .reduce((acc, linha) => {
      Object.keys(acc).forEach((k, i) => {
        acc[k] = comparaMaiorValor(acc[k], linha[i]);
@@ -54,5 +54,6 @@ fs.readFile(arquivo, 'utf8', (err, data) => {
     return linha;
   });
 
-  console.log(totais);
+  fs.writeFile('normalizados.json', JSON.stringify(vinhosNormalizados), 'utf8', () => console.log('Arquivo normalizado salvo!'));
 });
+
