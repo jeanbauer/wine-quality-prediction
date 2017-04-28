@@ -11,10 +11,6 @@ const s = pesos[1];
 const o1 = new Neuronio(o[0], 'oculta');
 const o2 = new Neuronio(o[1], 'oculta');
 const o3 = new Neuronio(o[2], 'oculta');
-const o4 = new Neuronio(o[3], 'oculta');
-const o5 = new Neuronio(o[4], 'oculta');
-const o6 = new Neuronio(o[5], 'oculta');
-const o7 = new Neuronio(o[6], 'oculta');
 
 const s1 = new Neuronio(s[0], 'saida');
 
@@ -41,7 +37,7 @@ const fnTreinar = () => {
     if (i % 10 === 0) {
       mediaFinal = _.mediaFinal(resposta);
       // console.log(i, mediaFinal);
-      salvarPesos([o1, o2, o3, o4, o5, o6, o7], [s1]);
+      salvarPesos([o1, o2, o3], [s1]);
     }
   }
   console.timeEnd('time');
@@ -54,14 +50,10 @@ function rodar(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11) {
   o1.calcula(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11);
   o2.calcula(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11);
   o3.calcula(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11);
-  o4.calcula(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11);
-  o5.calcula(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11);
-  o6.calcula(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11);
-  o7.calcula(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11);
 
-  s1.calcula(o1.y, o2.y, o3.y, o4.y, o5.y, o6.y, o7.y);
+  s1.calcula(o1.y, o2.y, o3.y);
 
-  return [o1.y];
+  return [s1.y];
 }
 
 function treinar(entradas, totalErros) {
@@ -92,7 +84,7 @@ function treinar(entradas, totalErros) {
   const erros = [erro1];
 
   totalErros.push({ erros, media });
-  console.log('erro1', target[0], output[0], ' => ' , erro1);
+  console.log('Erro', target[0], output[0], ' => ' , erro1);
 
   // Camada SAIDA
   const grad_s1 = s1.derivada() * erro1;
@@ -103,11 +95,7 @@ function treinar(entradas, totalErros) {
     s1.w0 + (grad_s1 * eta),
     s1.w1 + (grad_s1 * eta * o1.y),
     s1.w2 + (grad_s1 * eta * o2.y),
-    s1.w3 + (grad_s1 * eta * o3.y),
-    s1.w4 + (grad_s1 * eta * o4.y),
-    s1.w5 + (grad_s1 * eta * o5.y),
-    s1.w6 + (grad_s1 * eta * o6.y),
-    s1.w7 + (grad_s1 * eta * o7.y)
+    s1.w3 + (grad_s1 * eta * o3.y)
   );
   //console.log('pesos_s1', s1);
 
@@ -115,10 +103,6 @@ function treinar(entradas, totalErros) {
   const grad_o1 = o1.derivada() * (grad_s1 * s1.w1);
   const grad_o2 = o2.derivada() * (grad_s1 * s1.w2);
   const grad_o3 = o3.derivada() * (grad_s1 * s1.w3);
-  const grad_o4 = o4.derivada() * (grad_s1 * s1.w4);
-  const grad_o5 = o5.derivada() * (grad_s1 * s1.w5);
-  const grad_o6 = o6.derivada() * (grad_s1 * s1.w6);
-  const grad_o7 = o7.derivada() * (grad_s1 * s1.w7);
   //console.log('gradiente 1', grad_o1);
   // ajustando pesos
   o1.setPesos(
@@ -168,65 +152,6 @@ function treinar(entradas, totalErros) {
     o3.w11 + (grad_o3 * eta * x11)
   );
 
-  o4.setPesos(
-    o4.w0  + (grad_o4 * eta),
-    o4.w1  + (grad_o4 * eta * x1),
-    o4.w2  + (grad_o4 * eta * x2),
-    o4.w3  + (grad_o4 * eta * x3),
-    o4.w4  + (grad_o4 * eta * x4),
-    o4.w5  + (grad_o4 * eta * x5),
-    o4.w6  + (grad_o4 * eta * x6),
-    o4.w7  + (grad_o4 * eta * x7),
-    o4.w8  + (grad_o4 * eta * x8),
-    o4.w9  + (grad_o4 * eta * x9),
-    o4.w10 + (grad_o4 * eta * x10),
-    o4.w11 + (grad_o4 * eta * x11)
-  );
-
-  o5.setPesos(
-    o5.w0  + (grad_o5 * eta),
-    o5.w1  + (grad_o5 * eta * x1),
-    o5.w2  + (grad_o5 * eta * x2),
-    o5.w3  + (grad_o5 * eta * x3),
-    o5.w4  + (grad_o5 * eta * x4),
-    o5.w5  + (grad_o5 * eta * x5),
-    o5.w6  + (grad_o5 * eta * x6),
-    o5.w7  + (grad_o5 * eta * x7),
-    o5.w8  + (grad_o5 * eta * x8),
-    o5.w9  + (grad_o5 * eta * x9),
-    o5.w10 + (grad_o5 * eta * x10),
-    o5.w11 + (grad_o5 * eta * x11)
-  );
-
-  o6.setPesos(
-    o6.w0  + (grad_o6 * eta),
-    o6.w1  + (grad_o6 * eta * x1),
-    o6.w2  + (grad_o6 * eta * x2),
-    o6.w3  + (grad_o6 * eta * x3),
-    o6.w4  + (grad_o6 * eta * x4),
-    o6.w5  + (grad_o6 * eta * x5),
-    o6.w6  + (grad_o6 * eta * x6),
-    o6.w7  + (grad_o6 * eta * x7),
-    o6.w8  + (grad_o6 * eta * x8),
-    o6.w9  + (grad_o6 * eta * x9),
-    o6.w10 + (grad_o6 * eta * x10),
-    o6.w11 + (grad_o6 * eta * x11)
-  );
-
-  o7.setPesos(
-    o7.w0  + (grad_o7 * eta),
-    o7.w1  + (grad_o7 * eta * x1),
-    o7.w2  + (grad_o7 * eta * x2),
-    o7.w3  + (grad_o7 * eta * x3),
-    o7.w4  + (grad_o7 * eta * x4),
-    o7.w5  + (grad_o7 * eta * x5),
-    o7.w6  + (grad_o7 * eta * x6),
-    o7.w7  + (grad_o7 * eta * x7),
-    o7.w8  + (grad_o7 * eta * x8),
-    o7.w9  + (grad_o7 * eta * x9),
-    o7.w10 + (grad_o7 * eta * x10),
-    o7.w11 + (grad_o7 * eta * x11)
-  );
 
   return treinar(entradas, totalErros);
 }

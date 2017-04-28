@@ -19,10 +19,6 @@ class Neuronio {
       this.w1 = _.id(w1);
       this.w2 = _.id(w2);
       this.w3 = _.id(w3);
-      this.w4 = _.id(w4);
-      this.w5 = _.id(w5);
-      this.w6 = _.id(w6);
-      this.w7 = _.id(w7);
     } else {
       this.w0 = _.id(w0);
       this.w1 = _.id(w1);
@@ -49,7 +45,7 @@ class Neuronio {
     //   this.v = this[w] + ([`x${k + 1}`] * this[w]);
     // });
     if (this.tipo === 'saida') {
-      this.v = _.id(this.w0 + (x1 * this.w1) + (x2 * this.w2) + (x3 * this.w3) + (x4 * this.w4) + (x5 * this.w5) + (x6 * this.w6) + (x7 * this.w7));
+      this.v = _.id(this.w0 + (x1 * this.w1) + (x2 * this.w2) + (x3 * this.w3));
       this.y = _.id(1/(1 + Math.pow(Math.E, -this.v))); // sigmoid
     } else if (this.tipo === 'oculta') {
       this.v = _.id(this.w0 + (x1  * this.w1) + (x2  * this.w2) + (x3  * this.w3) + (x4  * this.w4) + (x5  * this.w5) + (x6  * this.w6) + (x7  * this.w7) + (x8  * this.w8) + (x9  * this.w9) + (x10 * this.w10) + (x11 * this.w11));
