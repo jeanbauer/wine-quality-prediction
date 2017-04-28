@@ -75,9 +75,9 @@ function treinar(entradas, totalErros) {
   const erros = [erro1];
 
   totalErros.push({ erros, media });
-  // console.log('Erro', target[0], output[0], ' => ' , erro1);
+  console.log('Erro', target[0], output[0], ':' , erro1);
 
-  // Camada SAIDA
+  // SAIDA
   const grad_s1 = s1.derivada() * erro1;
   // console.log('grad_s1', grad_s1);
 
@@ -87,8 +87,7 @@ function treinar(entradas, totalErros) {
     s1.w1 + (grad_s1 * eta * o1.y),
     s1.w2 + (grad_s1 * eta * o2.y),
     s1.w3 + (grad_s1 * eta * o3.y)
-  );
-  //console.log('pesos_s1', s1);
+  ); //console.log('pesos_s1', s1);
 
   // Camada OCULTA
   const grad_o1 = o1.derivada() * (grad_s1 * s1.w1);
