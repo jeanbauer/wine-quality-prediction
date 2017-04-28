@@ -1,16 +1,12 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
-const treinamentoFn = require('../treinamento');
 const tipo = process.argv[2];
 const arquivo = process.argv[3];
-let treinamento = false;
-let generalizacao = false;
-
 if (tipo === 'treinamento') {
-  treinamento = true;
+  // console.log('treinamento');
 } else if (tipo === 'generalizacao') {
-  treinamento = true;
+  // console.log('generalizacao');
 } else {
   return console.log('Comando não especificado');
 }
@@ -52,22 +48,12 @@ fs.readFile(arquivo, 'utf8', (err, data) => {
 
   const vinhosNormalizados = vinhos.map(linha => {
     Object.keys(totais).forEach((k, i) => {
-      linha[i] = (linha[i] / totais[k]).toFixed(6);
+      linha[i] = linha[i] / totais[k];
     });
 
-    return {
-      input: linha.slice(0, 11),
-      target: [linha[11]],
-    };
+    return linha;
   });
 
-  fs.writeFile('normalizados.json', JSON.stringify(vinhosNormalizados), 'utf8', () => {
-    console.log('Arquivo normalizado salvo!');
-    
-    if (treinamento) {
-      treinamentoFn();
-    } else {
-      // generalizacao
-    }
-  });
+  fs.writeFile('normalizados.json', JSON.stringify(vinhosNormalizados), 'utf8', () => console.log('Arquivo normalizado salvo!'));
 });
+
