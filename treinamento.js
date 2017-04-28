@@ -24,7 +24,6 @@ const fnTreinar = () => {
 
   const totalDeEpocas = 30;
 
-  // INICIO TREINAMENTO
   const epocas = totalDeEpocas;
   let i = 0;
   let resposta;
@@ -32,27 +31,21 @@ const fnTreinar = () => {
   console.time('time');
   while (i < epocas) {
     i++;
+    console.log(i);
     resposta = treinar(entradasNormalizadas.slice(0), []);
-		console.log(`Tentando salvar arquivo!\n`);
     if (i % 10 === 0) {
       mediaFinal = _.mediaFinal(resposta);
-      // console.log(i, mediaFinal);
       salvarPesos([o1, o2, o3], [s1]);
     }
   }
   console.timeEnd('time');
-  // console.log(i, mediaFinal);
-  // salvarPesos([o1, o2, o3, o4, o5, o6, o7], [s1], i);
 }
 
 function rodar(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11) {
-
   o1.calcula(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11);
   o2.calcula(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11);
   o3.calcula(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11);
-
   s1.calcula(o1.y, o2.y, o3.y);
-
   return [s1.y];
 }
 
@@ -77,18 +70,16 @@ function treinar(entradas, totalErros) {
 
   const output = rodar(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11);
 
-  // Erro
   const erro1 = _.id(target[0] - output[0]);
-
   const media = _.id(0.5 * (Math.pow((erro1), 2)));
   const erros = [erro1];
 
   totalErros.push({ erros, media });
-  console.log('Erro', target[0], output[0], ' => ' , erro1);
+  // console.log('Erro', target[0], output[0], ' => ' , erro1);
 
   // Camada SAIDA
   const grad_s1 = s1.derivada() * erro1;
-  //console.log('grad_s1', grad_s1);
+  // console.log('grad_s1', grad_s1);
 
   // ajustando pesos
   s1.setPesos(
@@ -122,7 +113,6 @@ function treinar(entradas, totalErros) {
 	 // console.log('pesos_o1', o1);
 
   o2.setPesos(
-	  
     o2.w0  + (grad_o2 * eta),
     o2.w1  + (grad_o2 * eta * x1),
     o2.w2  + (grad_o2 * eta * x2),
@@ -151,7 +141,6 @@ function treinar(entradas, totalErros) {
     o3.w10 + (grad_o3 * eta * x10),
     o3.w11 + (grad_o3 * eta * x11)
   );
-
 
   return treinar(entradas, totalErros);
 }
