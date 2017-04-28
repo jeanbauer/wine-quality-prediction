@@ -26,7 +26,7 @@ const fnTreinar = () => {
 
   const entradasNormalizadas = JSON.parse(fs.readFileSync('normalizados.json', 'utf8'));
 
-  const totalDeEpocas = 3000;
+  const totalDeEpocas = 30;
 
   // INICIO TREINAMENTO
   const epocas = totalDeEpocas;
@@ -37,7 +37,8 @@ const fnTreinar = () => {
   while (i < epocas) {
     i++;
     resposta = treinar(entradasNormalizadas.slice(0), []);
-    if (i % 1000 === 0) {
+		console.log(`Tentando salvar arquivo!\n`);
+    if (i % 10 === 0) {
       mediaFinal = _.mediaFinal(resposta);
       // console.log(i, mediaFinal);
       salvarPesos([o1, o2, o3, o4, o5, o6, o7], [s1]);
@@ -65,7 +66,6 @@ function rodar(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11) {
 
 function treinar(entradas, totalErros) {
   const entrada = entradas.shift();
-
   if (!entrada) return totalErros;
 
   const input  = entrada.input;
@@ -96,7 +96,7 @@ function treinar(entradas, totalErros) {
 
   // Camada SAIDA
   const grad_s1 = s1.derivada() * erro1;
-  console.log('grad_s1', grad_s1);
+  //console.log('grad_s1', grad_s1);
 
   // ajustando pesos
   s1.setPesos(
@@ -109,7 +109,7 @@ function treinar(entradas, totalErros) {
     s1.w6 + (grad_s1 * eta * o6.y),
     s1.w7 + (grad_s1 * eta * o7.y)
   );
-  console.log('pesos_o1', o1);
+  //console.log('pesos_s1', s1);
 
   // Camada OCULTA
   const grad_o1 = o1.derivada() * (grad_s1 * s1.w1);
@@ -119,7 +119,7 @@ function treinar(entradas, totalErros) {
   const grad_o5 = o5.derivada() * (grad_s1 * s1.w5);
   const grad_o6 = o6.derivada() * (grad_s1 * s1.w6);
   const grad_o7 = o7.derivada() * (grad_s1 * s1.w7);
-
+  //console.log('gradiente 1', grad_o1);
   // ajustando pesos
   o1.setPesos(
     o1.w0  + (grad_o1 * eta),
@@ -135,8 +135,10 @@ function treinar(entradas, totalErros) {
     o1.w10 + (grad_o1 * eta * x10),
     o1.w11 + (grad_o1 * eta * x11)
   );
+	 // console.log('pesos_o1', o1);
 
   o2.setPesos(
+	  
     o2.w0  + (grad_o2 * eta),
     o2.w1  + (grad_o2 * eta * x1),
     o2.w2  + (grad_o2 * eta * x2),
@@ -150,7 +152,7 @@ function treinar(entradas, totalErros) {
     o2.w10 + (grad_o2 * eta * x10),
     o2.w11 + (grad_o2 * eta * x11)
   );
-
+	
   o3.setPesos(
     o3.w0  + (grad_o3 * eta),
     o3.w1  + (grad_o3 * eta * x1),

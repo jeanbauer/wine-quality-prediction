@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 function salvarPesos(oculta, saida, sufix) {
+	console.log(`Entrei aqui, pelo menos!\n`);
   const filename = `configuracoes/pesosSalvos.js`; //   const filename = `data/pesos/${sufix}.js`;
   fs.exists(filename, exists => {
     if (exists) {
